@@ -1,0 +1,25 @@
+@startuml
+
+package User {
+    class Employee {
+        - id: EmployeeId
+        - name: EmployeeName
+    }
+
+    class Company {
+        - id: number
+    }
+    Company "1"--"*" Employee
+}
+
+package Attendance {
+    class AttendanceRecord {
+        - id: number
+        - type: number
+        - datetime: Date
+    }
+
+    Employee "1"--"*" AttendanceRecord
+}
+
+@enduml
