@@ -25,7 +25,15 @@ package Group {
         - categoryId: GroupCategory
     }
 
-    User "*" -- "1" Group
+    class GroupMember {
+        - id: GroupMemberId
+        - userId: UserId
+        - joinDate: Date
+        - status: GroupMemberStatus
+    }
+
+    User "1" -- "1" GroupMember
+    GroupMember "*" -- "1" Group
 }
 
 @enduml
