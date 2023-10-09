@@ -1,25 +1,31 @@
 @startuml
 
-package User {
-    class Employee {
-        - id: EmployeeId
-        - name: EmployeeName
+package Auth {
+    class AuthUser {
+        - id: AuthUserId
+        - email: Email
+        - password: Password
     }
-
-    class Company {
-        - id: number
-    }
-    Company "1"--"*" Employee
 }
 
-package Attendance {
-    class AttendanceRecord {
-        - id: number
-        - type: number
-        - datetime: Date
+package User {
+    class User {
+        - id: UserId
+        - name: UserName
     }
 
-    Employee "1"--"*" AttendanceRecord
+
+    AuthUser "1" - "1" User
+}
+
+package Group {
+    class Group {
+        - id: GroupId
+        - name: GroupName
+        - categoryId: GroupCategory
+    }
+
+    User "*" -- "1" Group
 }
 
 @enduml
