@@ -1,4 +1,4 @@
-export class EmployeeDto {
+export class UserDto {
   id: number;
   name: string;
 }

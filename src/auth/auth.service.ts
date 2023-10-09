@@ -2,7 +2,7 @@ import { API_KEY, API_SECRET_KEY, API_URL } from '@/constants/auth';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaClient, User } from '@prisma/client';
+import { AuthUserEntity, PrismaClient } from '@prisma/client';
 import { createClient } from '@supabase/supabase-js';
 import * as bcrypt from 'bcrypt';
 import { AuthSignUpDto } from './dto/AuthSignUpDto';
@@ -36,18 +36,18 @@ export class AuthService {
   }
 
   async signIn(email: string, password: string) {
-    const user = await this.prisma.authUser.findFirst({
+    const authUser = await this.prisma.authUserEntity.findFirst({
       where: { email },
     });
 
-    if (!user) return false;
+    if (!authUser) return false;
 
-    const storedPass = user.password;
+    const storedPass = authUser.password;
     if (!bcrypt.compareSync(password, storedPass)) {
       return false;
     }
 
-    const accessToken = await this.createToken(user);
+    const accessToken = await this.createToken(authUser);
     return { accessToken };
   }
 
@@ -58,7 +58,7 @@ export class AuthService {
 
   private async saveAuthUser(email: string, password: string, userId: number) {
     const hashPass = await bcrypt.hash(password, this.saltRound);
-    const authUser = await this.prisma.authUser.create({
+    const authUser = await this.prisma.authUserEntity.create({
       data: {
         email,
         password: hashPass,
@@ -69,8 +69,8 @@ export class AuthService {
     return authUser;
   }
 
-  private async createToken(user: User) {
-    const { id: sub, email, userid } = user;
+  private async createToken(authUser: AuthUserEntity) {
+    const { id: sub, email, userId } = authUser;
     const payload = {
       sub,
       email,
