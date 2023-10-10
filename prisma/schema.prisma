@@ -25,3 +25,18 @@ model UserEntity {
 
   @@map("user")
 }
+
+model GroupEntity {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  @@map("group")
+}
+
+model GroupMemberEntity {
+  id     Int @id @default(autoincrement())
+  userId Int
+  status Int
+
+  @@map("group_member")
+}
