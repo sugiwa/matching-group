@@ -23,4 +23,11 @@ export class Group extends Entity<Group> {
   sameIdentityAs(other: Group): boolean {
     return this.id === other.id;
   }
+
+  toPersistence(): any {
+    return {
+      id: this._id,
+      name: this._name.getValue(),
+    };
+  }
 }

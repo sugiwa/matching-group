@@ -11,4 +11,19 @@ export class GroupService {
     const dto = await this.groupDomainService.find(groupId);
     return dto;
   }
+
+  public async create(dto: GroupDto): Promise<number> {
+    const groupId = await this.groupDomainService.create(dto);
+    return groupId;
+  }
+
+  public async update(dto: GroupDto): Promise<number> {
+    const groupId = await this.groupDomainService.update(dto);
+    return groupId;
+  }
+
+  public async delete(groupId: number): Promise<number> {
+    await this.groupDomainService.delete(groupId);
+    return groupId;
+  }
 }
