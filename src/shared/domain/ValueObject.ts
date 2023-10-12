@@ -5,10 +5,15 @@ export abstract class ValueObject<T extends Primitives> {
 
   constructor(value: T) {
     this._value = value;
+    this.validation();
   }
 
   getValue() {
     return this._value;
+  }
+
+  validation(): void {
+    // do nothing
   }
 
   abstract equals(other: ValueObject<T>): boolean;
