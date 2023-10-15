@@ -9,6 +9,12 @@ export class GroupMember extends Entity<GroupMember> {
   get id() {
     return this._id;
   }
+  get userId() {
+    return this._userId;
+  }
+  get status() {
+    return this._status;
+  }
 
   constructor({ id, userId, status }) {
     super();
@@ -19,5 +25,13 @@ export class GroupMember extends Entity<GroupMember> {
 
   sameIdentityAs(other: GroupMember): boolean {
     return this.id === other.id;
+  }
+
+  toPersistence() {
+    return {
+      id: this.id,
+      userId: this.userId,
+      status: this.status.getValue(),
+    };
   }
 }
