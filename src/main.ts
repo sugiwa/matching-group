@@ -6,10 +6,11 @@ import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   const reflector = app.get(Reflector);
   app.useGlobalGuards(
     new JwtGuard(reflector, new JwtService(), new ConfigService()),
   );
-  await app.listen(3000);
+  await app.listen(8000);
 }
 bootstrap();
