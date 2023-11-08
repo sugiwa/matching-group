@@ -5,10 +5,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import JwtStrategy from './jwt.strategy';
 import { AuthInterceptor } from './auth.interceptor';
 import { JwtService } from '@nestjs/jwt';
+import { OAuthModule } from './oauth/oauth.module';
 
 @Module({
   controllers: [AuthController],
   imports: [
+    OAuthModule,
     ConfigModule,
     // JwtModule.registerAsync({
     //   imports: [ConfigModule],
