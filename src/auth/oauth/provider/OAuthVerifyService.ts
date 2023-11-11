@@ -1,4 +1,4 @@
 export interface OAuthVerifyService {
-  fetchUserInfo(): any;
+  fetchUserInfo(token: string): any;
   createToken(): any;
 }

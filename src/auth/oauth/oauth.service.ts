@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaClient } from '@prisma/client';
+import { OAuthVerifyService } from './provider/OAuthVerifyService';
+import { OAuthServiceFactory } from './provider/OAuthServiceFactory';
 
 @Injectable()
 export class OAuthService {
+  private logger = new Logger(OAuthService.name);
   private prisma: PrismaClient;
 
   constructor(
@@ -14,7 +17,13 @@ export class OAuthService {
     this.prisma = new PrismaClient();
   }
 
-  async signIn(provider: string, dto: any) {
-    // TODO
+  async signIn(provider: string, token: any) {
+    const verifyService: OAuthVerifyService = OAuthServiceFactory.create(
+      provider,
+      this.configService,
+    );
+
+    const userInfo = await verifyService.fetchUserInfo(token);
+    this.logger.debug(userInfo);
   }
 }

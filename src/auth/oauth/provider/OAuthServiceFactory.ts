@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { GoogleVerifyService } from './GoogleVerifyService';
 import { OAuthVerifyService } from './OAuthVerifyService';
 
@@ -6,9 +7,12 @@ const PROVIDER = {
 };
 
 export class OAuthServiceFactory {
-  public create(provider: string): OAuthVerifyService {
+  public static create(
+    provider: string,
+    configService: ConfigService,
+  ): OAuthVerifyService {
     if (provider === PROVIDER.GOOGLE) {
-      return new GoogleVerifyService();
+      return new GoogleVerifyService(configService);
     }
     throw new Error(`Error: ${provider} is not supported provider.`);
   }
