@@ -19,6 +19,15 @@ model AuthUserEntity {
   @@map("auth_user")
 }
 
+model OAuthUserEntity {
+  id       Int    @id @default(autoincrement())
+  provider String
+  sub      String
+  userId   Int
+
+  @@map("oauth_user")
+}
+
 model UserEntity {
   id   Int    @id @default(autoincrement())
   name String
