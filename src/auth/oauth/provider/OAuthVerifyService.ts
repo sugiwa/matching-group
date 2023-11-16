@@ -1,4 +1,6 @@
+import { OAuthUserInfo } from '../dto/OAuthUserInfo';
+
 export interface OAuthVerifyService {
-  fetchUserInfo(token: string): any;
+  fetchUserInfo(token: string): Promise<OAuthUserInfo>;
   createToken(): any;
 }

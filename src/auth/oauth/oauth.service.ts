@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaClient } from '@prisma/client';
 import { OAuthVerifyService } from './provider/OAuthVerifyService';
 import { OAuthServiceFactory } from './provider/OAuthServiceFactory';
+import { OAuthUserInfo } from './dto/OAuthUserInfo';
 
 @Injectable()
 export class OAuthService {
@@ -23,7 +24,7 @@ export class OAuthService {
       this.configService,
     );
 
-    const userInfo = await verifyService.fetchUserInfo(token);
-    this.logger.debug(userInfo);
+    const userInfo: OAuthUserInfo = await verifyService.fetchUserInfo(token);
+    this.logger.debug(JSON.stringify(userInfo));
   }
 }
