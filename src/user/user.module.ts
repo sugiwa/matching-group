@@ -19,6 +19,15 @@ import { UserRepositoryImpl } from './repository/UserRepositoryImpl';
       useClass: UserRepositoryImpl,
     },
   ],
-  exports: [],
+  exports: [
+    {
+      provide: CONSTANTS.DOMAIN_SERVICE,
+      useClass: UserDomainService,
+    },
+    {
+      provide: CONSTANTS.REPOSITORY,
+      useClass: UserRepositoryImpl,
+    },
+  ],
 })
 export class UserModule {}
