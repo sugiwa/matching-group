@@ -36,15 +36,15 @@ export class OAuthService {
       this.logger.debug('this user is already registered');
       return;
     }
-    const userData = await this.createUser(userInfo);
-    console.log('userData: ', userData);
-    await this.oauthRepository.save(userInfo);
+    const userId: number = await this.createUser(userInfo);
+    console.log('userId: ', userId);
+    await this.oauthRepository.save(userInfo, userId);
   }
 
   private async createUser(userInfo: OAuthUserInfo) {
     const user = new UserDto();
     user.name = userInfo.name;
-    const response = await this.userService.create(user);
-    return response;
+    const userId = await this.userService.create(user);
+    return userId;
   }
 }

@@ -10,11 +10,11 @@ export class OAuthRepository {
     this.prisma = new PrismaClient();
   }
 
-  async save(oauthUserInfo: OAuthUserInfo) {
+  async save(oauthUserInfo: OAuthUserInfo, userId: number) {
     const data = {
       provider: oauthUserInfo.provider,
       sub: oauthUserInfo.sub,
-      userId: 0,
+      userId,
     };
     const entity = await this.prisma.oAuthUserEntity.create({ data });
     return entity;
