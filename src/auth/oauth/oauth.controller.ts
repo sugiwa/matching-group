@@ -13,6 +13,6 @@ export class OAuthController {
     @Param('provider') provider: string,
     @Headers('oauth-token') token: string,
   ) {
-    return this.oauthService.signIn(provider, token);
+    return await this.oauthService.signIn(provider, token);
   }
 }
