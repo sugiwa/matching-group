@@ -9,6 +9,7 @@ import { UserDto } from '@/user/dto/UserDto';
 import { UserService } from '@/user/user.service';
 import { API_SECRET_KEY } from '@/constants/auth';
 import { OAuthUserEntity } from '@prisma/client';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class OAuthService {
@@ -58,7 +59,13 @@ export class OAuthService {
 
   private async createToken(authUser: OAuthUserEntity) {
     const { userId } = authUser;
-    const payload = { userId };
+    const now = new Date();
+    const iat = now.getTime();
+    now.setHours(now.getHours() + 1);
+    const exp = now.getTime();
+    const jti = crypto.randomUUID();
+
+    const payload = { userId, iat, exp, jti };
     return await this.jwtService.signAsync(payload, {
       secret: this.configService.get(API_SECRET_KEY),
     });

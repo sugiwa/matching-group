@@ -49,6 +49,12 @@ export class JwtGuard extends AuthGuard('jwt') {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get('API_SECRET_KEY'),
       });
+      this.logger.debug('PAYLOAD: ', payload);
+      const exp = new Date(payload['exp']);
+      const now = new Date();
+      if (now > exp) {
+        return false;
+      }
       request['user'] = payload;
     } catch {
       throw new UnauthorizedException();
