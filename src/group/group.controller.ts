@@ -12,12 +12,19 @@ import {
 } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { GroupDto } from './dto/GroupDto';
+import { CurrentUser } from '@/shared/decorators/user.decorator';
 
 @Controller('group')
 export class GroupController {
   private readonly logger = new Logger(GroupController.name);
   @Inject(GroupService)
   private readonly groupService: GroupService;
+
+  @Get('test')
+  test(@CurrentUser() user) {
+    this.logger.debug(user);
+    return user;
+  }
 
   @Get(':id')
   async find(@Param('id', ParseIntPipe) groupId: number): Promise<GroupDto> {

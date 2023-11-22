@@ -18,7 +18,7 @@ export default class JwtStrategy extends PassportStrategy(BaseJwtStrategy) {
 
   async validate(payload: any) {
     this.logger.debug(`payload: ${JSON.stringify(payload)}`);
-    const { sub, email, employeeId } = payload;
-    return { userId: sub, email, employeeId };
+    const { userId } = payload;
+    return { userId };
   }
 }
