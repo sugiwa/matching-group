@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 declare const module: any;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.enableCors();
   const reflector = app.get(Reflector);
   app.useGlobalGuards(
